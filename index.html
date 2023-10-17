@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Large Language Models as Generalizable Policies for Embodied Tasks">
+  <meta name="keywords" content="LLaRP">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Large Language Models as Generalizable Policies for Embodied Tasks</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Large Language Models as Generalizable Policies for Embodied Tasks</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://www.andrewszot.com">Andrew Szot</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.maxschwarzer.com">Max Schwarzer</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://bmazoure.github.io">Bogdan Mazoure</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://dexter1691.github.io">Harsh Agrawal</a>,
+            </span>
+            <span class="author-block">
+              <a href="#">Walter Talbott</a>,
+            </span>
+            <span class="author-block">
+              <a href="#">Katherine Metcalf</a>,
+            </span>
+            <span class="author-block">
+              <a href="#">Natalie Mackraz</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://rdevon.github.io">Devon Hjelm</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://sites.google.com/view/alextoshev">Alexander Toshev</a>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Apple ML Research</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Coming Soon)</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+            We show that large language models (LLMs) can be adapted to be generalizable policies for embodied visual tasks. Our approach, called Large LAnguage model Reinforcement Learning Policy (LLaRP), adapts a pre-trained frozen LLM to take as input text instructions and visual egocentric observations and output actions directly in the environment. Using reinforcement learning, we train LLaRP to see and act solely through environmental interactions. We show that LLaRP is robust to complex paraphrasings of task instructions and can generalize to new tasks that require novel optimal behavior. In particular, on 1,000 unseen tasks it achieves 42% success rate, 1.7x the success rate of other common learned baselines or zero-shot applications of LLMs. Finally, to aid the community in studying language conditioned, massively multi-task, embodied AI problems we release a novel benchmark, Language Rearrangement, consisting of 150,000 training and 1,000 testing tasks for language-conditioned rearrangement.
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+          <img src="./static/images/intro_figure.jpg" />
+          <br />
+        <div class="content has-text-justified">
+            In this work, we successfully show that LLMs can be adapted for Reinforcement Learning (RL) problems in Embodied AI, using a method we call <b>Large LAnguage model Reinforcement learning Policy (LLaRP)</b>. We demonstrate advanced capabilities on a diverse set of rearrangement tasks, where the input and output domains aren’t just language. The method robustly generalizes over unseen objects and scenes, novel ways of referring to objects, either by description or explanation of an activity; and even novel description of tasks including variable number of rearrangements, spatial descriptions, and conditional statements.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+          <img src="./static/images/method_figures.jpg" />
+          <br />
+        <div class="content has-text-justified">
+            LLaRP takes as input the task instruction and all egocentric visual RGB frames from the current episode. These are encoded using the LLM embeddings or a vision encoder. The hidden outputs of the LLM are porjected to action and value predictions. The observation encoder and action decoder MLPs are the only trained components. The LLM and vision encoder are frozen. The agent learns with online RL (PPO) by interacting with the environment. 
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">LLaRP Success Examples</h2>
+    
+    <div class="content">
+        <div class="columns is-centered">
+          <div class="column">
+            <div class="content">
+               In the new <b>Language Rearrangement</b> benchmark, we show examples of LLaRP successfully zero-shot generalizing to unseen instructions in unseen houses. The agent is trained on 150,000 basic rearrangement instructions. We evaluate to test generalization capabilities with respect to different rearrangement concepts expressed with language. The policy takes as input the task instruction and 1st person RGB head camera (top right of the visualizations), the 3rd person and top down view are only for visualization and not provided to the policy.
+            </div>
+          </div>
+          <div class="column">
+              <img src="./static/images/overview.jpeg" />
+          </div>
+        </div>
+
+    </div>
+    <h4 class="title is-4">Context</h4>
+    <div class="content">
+        <p>
+            Describe a situation where a particular object fits.
+        </p>
+    </div>
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/context_succ_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <div class="content">
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/context_succ_2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <h4 class="title is-4">Referring Expressions</h4>
+    <div class="content">
+        <p>
+            Refer to objects by their visual appearance.
+        </p>
+    </div>
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/ref_succ_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <div class="content">
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/ref_succ_2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <h4 class="title is-4">Instruction Rephrasing</h4>
+    <div class="content">
+        <p>
+            Swap the order that nouns appear in the instruction and substitute synonyms for verbs.
+        </p>
+    </div>
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/phrase_succ_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <div class="content">
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/phrase_succ_2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <h4 class="title is-4">Irrelevant Instruction Text</h4>
+    <div class="content">
+        <p>
+            Instructions that include irrelevant context.
+        </p>
+    </div>
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/distract_succ_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <div class="content">
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/distract_succ_2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <h4 class="title is-4">Novel Objects</h4>
+    <div class="content">
+        <p>
+            New entity/instruction pairs.
+        </p>
+    </div>
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/objects_succ_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <div class="content">
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/objects_succ_2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <h4 class="title is-4">Multiple Objects</h4>
+    <div class="content">
+        <p>
+            Find all of an object.
+        </p>
+    </div>
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/multi_succ_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <div class="content">
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/multi_succ_2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+
+      <div class="column">
+        <div class="content">
+          <h4 class="title is-4">Conditional Instructions</h4>
+          <div class="content">
+              <p>
+                  Adjust behavior based on if the conditional statement is true.
+              </p>
+          </div>
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/cond_succ_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="content">
+          <h4 class="title is-4">Spatial Relationships</h4>
+          <div class="content">
+              <p>
+                  Refer to receptacles indirectly by their location relative to other obstacles. 
+              </p>
+          </div>
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/spatial_succ_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    
+    </div>
+    
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">LLaRP Failure Examples</h2>
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <h4 class="title is-4">Context</h4>
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/context_fail_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="column">
+        <h4 class="title is-4">Referring Expressions</h4>
+        <div class="columns is-centered">
+          <div class="column content">
+            <video id="matting-video" autoplay controls muted playsinline height="100%">
+              <source src="./static/videos/ref_fail_1.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <h4 class="title is-4">Spatial Relationships</h4>
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/spatial_fail_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="column">
+        <h4 class="title is-4">Irrelevant Instruction Text</h4>
+        <div class="columns is-centered">
+          <div class="column content">
+            <video id="matting-video" autoplay controls muted playsinline height="100%">
+              <source src="./static/videos/distract_fail_1.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <h4 class="title is-4">Multiple Rearrangements</h4>
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/moreobjs_fail_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="column">
+        <h4 class="title is-4">Multiple Objects</h4>
+        <div class="columns is-centered">
+          <div class="column content">
+            <video id="matting-video" autoplay controls muted playsinline height="100%">
+              <source src="./static/videos/multi_fail_1.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <h4 class="title is-4">Conditional Instructions</h4>
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/cond_fail_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{szot2023large,
+  author    = {Szot, Andrew and Schwarzer, Max and Mazoure, Bogdan and Agrawal, Harsh and Talbott, Walter and Metcalf, Katherine and Mackraz, Natalie and Hjelm, Devon and Toshev, Alexander},
+  title     = {Large Language Models as Generalizable Policies for Embodied Tasks},
+  journal   = {preprint},
+  year      = {2023},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+              The template for this website is from <a href="https://nerfies.github.io/">https://nerfies.github.io/</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
