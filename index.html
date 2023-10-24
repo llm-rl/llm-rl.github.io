@@ -122,7 +122,7 @@
           <img src="./static/images/intro_figure.jpg" />
           <br />
         <div class="content has-text-justified">
-            In this work, we successfully show that LLMs can be adapted for Reinforcement Learning (RL) problems in Embodied AI, using a method we call <b>Large LAnguage model Reinforcement learning Policy (LLaRP)</b>. We demonstrate advanced capabilities on a diverse set of rearrangement tasks, where the input and output domains aren’t just language. The method robustly generalizes over unseen objects and scenes, novel ways of referring to objects, either by description or explanation of an activity; and even novel description of tasks including variable number of rearrangements, spatial descriptions, and conditional statements.
+            In this work, we show that LLMs can be adapted for Reinforcement Learning (RL) problems in Embodied AI, using a method called <b>Large LAnguage model Reinforcement learning Policy (LLaRP)</b>. LLaRP is able to solve diverse rearrangement tasks specified by natural language instructions in unseen houses while operating from an egocentric RGB camera and interacting with the environment via an arm and mobile base. The method robustly generalizes over unseen objects and scenes, novel ways of referring to objects, either by description or explanation of an activity; and even novel description of tasks including variable number of rearrangements, spatial descriptions, and conditional statements.
         </div>
       </div>
     </div>
@@ -137,7 +137,7 @@
           <img src="./static/images/method_figures.jpg" />
           <br />
         <div class="content has-text-justified">
-            LLaRP takes as input the task instruction and all egocentric visual RGB frames from the current episode. These are encoded using the LLM embeddings or a vision encoder. The hidden outputs of the LLM are porjected to action and value predictions. The observation encoder and action decoder MLPs are the only trained components. The LLM and vision encoder are frozen. The agent learns with online RL (PPO) by interacting with the environment. 
+            LLaRP takes as input the task instruction and all egocentric visual RGB frames from the current episode. These are encoded using the LLM embeddings or a vision encoder. The hidden outputs of the LLM are projected to action and value predictions. The observation encoder and action decoder MLPs are the only trained components. The LLM and vision encoder are frozen. The agent learns with online RL (PPO) by interacting with the environment. 
         </div>
       </div>
     </div>
@@ -152,7 +152,8 @@
         <div class="columns is-centered">
           <div class="column">
             <div class="content">
-               In the new <b>Language Rearrangement</b> benchmark, we show examples of LLaRP successfully zero-shot generalizing to unseen instructions in unseen houses. The agent is trained on 150,000 basic rearrangement instructions. We evaluate to test generalization capabilities with respect to different rearrangement concepts expressed with language. The policy takes as input the task instruction and 1st person RGB head camera (top right of the visualizations), the 3rd person and top down view are only for visualization and not provided to the policy.
+                   In the new <b>Language Rearrangement</b> benchmark, we show examples of LLaRP successfully zero-shot generalizing to unseen instructions in unseen houses. The agent is trained on 150,000 basic rearrangement instructions. We evaluate to test generalization capabilities with respect to different rearrangement concepts expressed with language. The policy takes as input the task instruction and 1st person RGB head camera (top right of the visualizations), the 3rd person and top down view are only for visualization and not provided to the policy.
+                In the videos, the LLaRP policy is trained to select high-level action primitives like pick(apple), navigate(table), or close(fridge). These primitives then execute the low-level joint control.
             </div>
           </div>
           <div class="column">
